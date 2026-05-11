@@ -1,5 +1,2 @@
 [server]
-maxUploadSizeMb = 512
-
-# Optional: run in headless mode for deployment
 headless = true

@@ -218,7 +218,7 @@ st.write(f"Filtered Rows: {len(filtered_df):,} | Columns: {len(display_df.column
 # Display only once
 st.dataframe(
     display_df.head(1000),
-    use_container_width=True
+    width='stretch'
 )
 
 # lets perform some salary analysis based on the filtered data
@@ -260,7 +260,7 @@ with tab1:
         .reset_index()
     )
 
-    st.dataframe(category_salary, use_container_width=True)
+    st.dataframe(category_salary, width='stretch')
     st.bar_chart(category_salary.head(15), x="single_category", y="avg_salary")
 
 with tab2:
@@ -279,7 +279,7 @@ with tab2:
         .reset_index()
     )
 
-    st.dataframe(salary_by_position, use_container_width=True)
+    st.dataframe(salary_by_position, width='stretch')
     st.bar_chart(salary_by_position, x="positionLevels", y="avg_salary")
 
 with tab3:
@@ -298,7 +298,7 @@ with tab3:
         .reset_index()
     )
 
-    st.dataframe(salary_by_employment, use_container_width=True)
+    st.dataframe(salary_by_employment, width='stretch')
     st.bar_chart(salary_by_employment, x="employmentTypes", y="avg_salary")
 
 with tab4:
@@ -317,7 +317,7 @@ with tab4:
         .reset_index()
     )
 
-    st.dataframe(salary_by_experience, use_container_width=True)
+    st.dataframe(salary_by_experience, width='stretch')
     st.line_chart(salary_by_experience, x="minimumYearsExperience", y="avg_salary")
 
 
@@ -411,8 +411,8 @@ with market_tab1:
         .properties(height=500)
     )
 
-    st.altair_chart(company_chart, use_container_width=True)
-    st.dataframe(top_companies, use_container_width=True)
+    st.altair_chart(company_chart, width='stretch')
+    st.dataframe(top_companies, width='stretch')
 
 # =========================
 # Tab 2: Demand by Category
@@ -455,8 +455,8 @@ with market_tab2:
         .properties(height=500)
     )
 
-    st.altair_chart(category_chart, use_container_width=True)
-    st.dataframe(category_demand, use_container_width=True)
+    st.altair_chart(category_chart, width='stretch')
+    st.dataframe(category_demand, width='stretch')
 
 # =========================
 # Tab 3: Posting Trend
@@ -514,8 +514,8 @@ with market_tab3:
         .properties(height=450)
     )
 
-    st.altair_chart(posting_chart, use_container_width=True)
-    st.dataframe(posting_trend, use_container_width=True)
+    st.altair_chart(posting_chart, width='stretch')
+    st.dataframe(posting_trend, width='stretch')
 
 # =========================
 # Tab 4: Vacancies
@@ -578,5 +578,5 @@ with market_tab4:
         .properties(height=500)
     )
 
-    st.altair_chart(vacancy_chart, use_container_width=True)
-    st.dataframe(vacancy_by_category, use_container_width=True)
+    st.altair_chart(vacancy_chart, width='stretch')
+    st.dataframe(vacancy_by_category, width='stretch')
