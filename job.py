@@ -30,10 +30,6 @@ def load_data(path):
     return pd.read_csv(path)
 
 
-def load_uploaded_data(uploaded_file):
-    return pd.read_csv(uploaded_file)
-
-
 def validate_required_columns(dataframe):
     return [col for col in REQUIRED_COLUMNS if col not in dataframe.columns]
 
@@ -63,21 +59,8 @@ st.markdown("""
 -SGJobData.csv contains job postings data with various attributes such as category, employment type, position level, salary, and more.            
 """)
 
-# Dataset input
-st.sidebar.header("Dataset")
-uploaded_file = st.sidebar.file_uploader(
-    "Upload your own CSV file",
-    type=["csv"],
-    help="Upload a local CSV file to analyze it in this dashboard. If no file is uploaded, the built-in sample dataset is used."
-)
-
 try:
-    if uploaded_file is not None:
-        st.sidebar.success(f"Loaded file: {uploaded_file.name}")
-        df = load_uploaded_data(uploaded_file)
-    else:
-        st.sidebar.info("Using built-in sample dataset.")
-        df = load_data(DATA_PATH)
+    df = load_data(DATA_PATH)
 except Exception as exc:
     st.error(f"Unable to load dataset: {exc}")
     st.stop()
