@@ -2,10 +2,41 @@ import streamlit as st
 import pandas as pd
 import ast
 import altair as alt
+
 # Page config must be first Streamlit command
 st.set_page_config(page_title="Singapore Job Dashboard", layout="wide")
 
 DATA_PATH = "./data/SGJobData.csv"
+REQUIRED_COLUMNS = [
+    "categories",
+    "employmentTypes",
+    "positionLevels",
+    "status_jobStatus",
+    "average_salary",
+    "salary_minimum",
+    "salary_maximum",
+    "minimumYearsExperience",
+    "metadata_totalNumberOfView",
+    "metadata_totalNumberJobApplication",
+    "metadata_newPostingDate",
+    "metadata_originalPostingDate",
+    "numberOfVacancies",
+    "postedCompany_name",
+    "title",
+]
+
+@st.cache_data
+def load_data(path):
+    return pd.read_csv(path)
+
+
+def load_uploaded_data(uploaded_file):
+    return pd.read_csv(uploaded_file)
+
+
+def validate_required_columns(dataframe):
+    return [col for col in REQUIRED_COLUMNS if col not in dataframe.columns]
+
 
 # Page title
 st.header("Team 1")
@@ -32,8 +63,32 @@ st.markdown("""
 -SGJobData.csv contains job postings data with various attributes such as category, employment type, position level, salary, and more.            
 """)
 
-# Load data
-df = pd.read_csv(DATA_PATH)
+# Dataset input
+st.sidebar.header("Dataset")
+uploaded_file = st.sidebar.file_uploader(
+    "Upload your own CSV file",
+    type=["csv"],
+    help="Upload a local CSV file to analyze it in this dashboard. If no file is uploaded, the built-in sample dataset is used."
+)
+
+try:
+    if uploaded_file is not None:
+        st.sidebar.success(f"Loaded file: {uploaded_file.name}")
+        df = load_uploaded_data(uploaded_file)
+    else:
+        st.sidebar.info("Using built-in sample dataset.")
+        df = load_data(DATA_PATH)
+except Exception as exc:
+    st.error(f"Unable to load dataset: {exc}")
+    st.stop()
+
+missing_columns = validate_required_columns(df)
+if missing_columns:
+    st.error("The uploaded dataset is missing required columns. Please include the following columns:")
+    st.write(", ".join(REQUIRED_COLUMNS)
+    )
+    st.write("Missing columns:", ", ".join(missing_columns))
+    st.stop()
 
 # Convert date column
 df["metadata_newPostingDate"] = pd.to_datetime(
