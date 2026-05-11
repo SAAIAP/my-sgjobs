@@ -6,7 +6,7 @@ import altair as alt
 # Page config must be first Streamlit command
 st.set_page_config(page_title="Singapore Job Dashboard", layout="wide")
 
-DATA_PATH = "./data/SGJobData.csv"
+DATA_PATH = "./data/SGJobData.csv.gz"
 REQUIRED_COLUMNS = [
     "categories",
     "employmentTypes",
